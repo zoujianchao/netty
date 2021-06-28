@@ -9,9 +9,10 @@ import java.util.concurrent.Executors;
 /**
  * @author : zoujc
  * @date : 2021/6/28
- * @description : BIO : 1.每个请求都需要创建独立的线程,与客户端进行数据Read,业务处理,数据Write
- *                      2.当并发比较大时,需要创建大量线程来处理连接,系统资源占用较大
- *                      3.连接建立后,如果当前线程暂时没有数据可读,则线程就阻塞到Read操作上,造成资源浪费
+ * @description :  BIO:同步阻塞,服务器实现模式为一个连接一个线程
+ * BIO : 1.每个请求都需要创建独立的线程,与客户端进行数据Read,业务处理,数据Write
+ *       2.当并发比较大时,需要创建大量线程来处理连接,系统资源占用较大
+ *       3.连接建立后,如果当前线程暂时没有数据可读,则线程就阻塞到Read操作上,造成资源浪费
  */
 public class BIOServer {
     public static void main(String[] args) throws Exception{
