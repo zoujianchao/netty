@@ -18,6 +18,7 @@ public class TestServerInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = socketChannel.pipeline();
         //加入一个netty提供的httpServerCodec codec => [code - decoder]
         //作用:1.httpServerCodec是netty提供的处理http的编解码器
+        //浏览器每刷新一次就会有一个新的pipeline
         pipeline.addLast("MyHttpServerCodec", new HttpServerCodec());
         //增加自定义处理器handler
         pipeline.addLast("MyTestHttpServerHandler", new TestHttpServerHandler());
