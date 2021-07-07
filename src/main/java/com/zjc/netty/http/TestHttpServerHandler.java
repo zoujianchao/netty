@@ -7,6 +7,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 
+import java.net.URI;
+
 /**
  * @author : zoujc
  * @date : 2021/7/7
@@ -15,6 +17,7 @@ import io.netty.util.CharsetUtil;
 public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
     /**
      * channelRead0 读取客户端数据
+     *
      * @param channelHandlerContext
      * @param httpObject
      * @throws Exception
@@ -25,6 +28,14 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
         if (httpObject instanceof HttpRequest) {
             System.out.println("httpObject 类型: " + httpObject.getClass());
             System.out.println("客户端地址: " + channelHandlerContext.channel().remoteAddress());
+
+            //过滤 后缀是/favicon.ico 图标的请求
+            HttpRequest httpRequest = (HttpRequest) httpObject;
+            URI uri = new URI(httpRequest.uri());
+            if ("/favicon.ico".equals(uri.getPath())) {
+                System.out.println("请求了 favicon.ico, 不做响应!");
+                return;
+            }
             //回复信息给浏览器 [http协议]
             ByteBuf content = Unpooled.copiedBuffer("hello,我是服务器", CharsetUtil.UTF_8);
             //构造一个Http响应, 即httpResponse
