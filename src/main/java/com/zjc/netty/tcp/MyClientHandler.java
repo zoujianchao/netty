@@ -6,6 +6,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author : zoujc
  * @date : 2021/7/11
@@ -26,7 +29,7 @@ public class MyClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         byte[] buffer = new byte[msg.readableBytes()];
         msg.readBytes(buffer);
-        System.out.println("客户端接收消息: " + msg.toString());
+        System.out.println("客户端接收消息: " + new String(buffer, StandardCharsets.UTF_8));
         System.out.println("客户端接收消息数据量=" + (++this.count));
     }
 

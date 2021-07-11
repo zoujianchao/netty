@@ -6,6 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
@@ -21,7 +22,7 @@ public class MyServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
         byte[] buffer = new byte[msg.readableBytes()];
         msg.readBytes(buffer);
         //将buffer转成字符串
-        System.out.println("服务端接到数据: " + msg.toString());
+        System.out.println("服务端接到数据: " +new String(buffer, StandardCharsets.UTF_8));
         System.out.println("服务器端接收到消息量=" + (++this.count));
 
         //服务器回送数据给客户端
